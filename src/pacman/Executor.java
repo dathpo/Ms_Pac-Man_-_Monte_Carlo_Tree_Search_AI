@@ -50,31 +50,31 @@ public class Executor {
 		// From Damien: This is the version to run to get an estimated grade for
 		// your submission
 
-		// int numTrials = 100;
-		// exec.runExperiment(new RandomPacMan(), new Legacy(), numTrials);
+//		 int numTrials = 100;
+//		 exec.runExperiment(new MonteCarloBest(), new Legacy(), numTrials);
 
 		// run a game in synchronous mode: game waits until controllers respond.
-		 int delay = 10;
-		 boolean visual = true;
-		 exec.runGame(new Monty(), new Legacy(), visual, delay);
+//		 int delay = 1;
+//		 boolean visual = true;
+//		 exec.runGame(new MonteCarlo(), new Legacy(), visual, delay);
 
 		/// *
 		// run the game in asynchronous mode.
 //		boolean visual = true;
-		// exec.runGameTimed(new NearestPillPacMan(),new
-		// AggressiveGhosts(),visual);
+//		 exec.runGameTimed(new NearestPillPacMan(),new
+//		 AggressiveGhosts(),visual);
 //		exec.runGameTimed(new MonteCarlo(), new Legacy(), visual);
-		// exec.runGameTimed(new HumanController(new KeyBoardInput()),new
-		// StarterGhosts(),visual);
-		// */
+//		 exec.runGameTimed(new HumanController(new KeyBoardInput()),new
+//		 StarterGhosts(),visual);
+//		 */
 
 		// run the game in asynchronous mode but advance as soon as both
 		// controllers are ready - this is the mode of the competition.
 		// time limit of DELAY ms still applies.
-//		 boolean visual=true;
-//		 boolean fixedTime=false;
-//		 exec.runGameTimedSpeedOptimised(new Test(),new
-//		 RandomGhosts(),fixedTime,visual);
+		 boolean visual=true;
+		 boolean fixedTime=false;
+		 exec.runGameTimedSpeedOptimised(new MonteCarloNew(),new
+		 Legacy(),fixedTime,visual);
 
 		/*
 		 * //run game in asynchronous mode and record it to file for replay at a
@@ -272,9 +272,9 @@ public class Executor {
 					}
 				}
 
-				if (fixedTime)
+				if (fixedTime) 
 					Thread.sleep(((DELAY / INTERVAL_WAIT) - waited) * INTERVAL_WAIT);
-
+				
 				game.advanceGame(pacManController.getMove(), ghostController.getMove());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
