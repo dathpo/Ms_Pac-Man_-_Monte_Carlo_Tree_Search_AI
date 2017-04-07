@@ -50,13 +50,13 @@ public class Executor {
 		// From Damien: This is the version to run to get an estimated grade for
 		// your submission
 
-//		 int numTrials = 100;
-//		 exec.runExperiment(new MonteCarloBest(), new Legacy(), numTrials);
+		 int numTrials = 10;
+		 exec.runExperiment(new FixedRo(), new Legacy(), numTrials);
 
 		// run a game in synchronous mode: game waits until controllers respond.
-//		 int delay = 1;
+//		 int delay = 0;
 //		 boolean visual = true;
-//		 exec.runGame(new MonteCarlo(), new Legacy(), visual, delay);
+//		 exec.runGame(new FixedRo(), new Legacy(), visual, delay);
 
 		/// *
 		// run the game in asynchronous mode.
@@ -71,10 +71,10 @@ public class Executor {
 		// run the game in asynchronous mode but advance as soon as both
 		// controllers are ready - this is the mode of the competition.
 		// time limit of DELAY ms still applies.
-		 boolean visual=true;
-		 boolean fixedTime=false;
-		 exec.runGameTimedSpeedOptimised(new MonteCarloNew(),new
-		 Legacy(),fixedTime,visual);
+//		 boolean visual=true;
+//		 boolean fixedTime=false;
+//		 exec.runGameTimedSpeedOptimised(new MonteCarloNew(),new
+//		 Legacy(), fixedTime, visual);
 
 		/*
 		 * //run game in asynchronous mode and record it to file for replay at a

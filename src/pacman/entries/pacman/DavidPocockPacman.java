@@ -4,7 +4,6 @@ import java.util.Random;
 
 import pacman.controllers.Controller;
 import pacman.controllers.examples.*;
-import static pacman.game.Constants.DELAY;
 import pacman.game.Constants.*;
 import pacman.game.Game;
 
@@ -13,18 +12,15 @@ import pacman.game.Game;
  * fill in the getAction() method. Any additional classes you write should either
  * be placed in this package or sub-packages (e.g., game.entries.pacman.mypackage).
  */
-public class MonteCarlo extends Controller<MOVE> {
+public class DavidPocockPacman extends Controller<MOVE> {
 
 	private Legacy ghosts = new Legacy();
 	private MOVE bestMove = MOVE.NEUTRAL;
 	private Random rnd = new Random();
 	private int numRollouts = 50;
-	private int moveTime = 0;
 	private double totalScore = 0;
-	private long startTime = 0;
 
 	public MOVE getMove(Game game, long timeDue) {
-		startTime = System.currentTimeMillis();
 		MOVE[] moves = game.getPossibleMoves(game.getPacmanCurrentNodeIndex());
 		double bestAverage = 0;
 		if (game.isJunction(game.getPacmanCurrentNodeIndex())) {
@@ -33,8 +29,6 @@ public class MonteCarlo extends Controller<MOVE> {
 				for (int i = 0; i < numRollouts; i++) {
 					totalScore += rollout(gameCopy, move, timeDue);
 				}
-				System.out.println(move + ": Average: " + totalScore / numRollouts + ", Score: " + totalScore
-						+ ", Rollouts: " + numRollouts);
 				if (bestAverage < (totalScore / numRollouts)) {
 					bestAverage = (totalScore / numRollouts);
 					bestMove = move;
@@ -44,9 +38,6 @@ public class MonteCarlo extends Controller<MOVE> {
 		} else {
 			return getRandomNRMove(game);
 		}
-		moveTime = (int) (System.currentTimeMillis() - startTime);
-		System.out.println("Best Average: " + bestAverage + ", Move: " + bestMove + ", Time: " + moveTime);
-		System.out.println("Current Score: " + game.getScore());
 		return bestMove;
 	}
 
@@ -54,30 +45,13 @@ public class MonteCarlo extends Controller<MOVE> {
 		Game gameCopy = game.copy();
 		gameCopy.advanceGame(move, ghosts.getMove(gameCopy, timeDue));
 		while (!gameCopy.wasPacManEaten()) {
-		gameCopy.advanceGame(getRandomNRMove(gameCopy), ghosts.getMove(gameCopy, timeDue));
+			gameCopy.advanceGame(getRandomNRMove(gameCopy), ghosts.getMove(gameCopy, timeDue));
 		}
 		return gameCopy.getScore();
 	}
-	
+
 	private MOVE getRandomNRMove(Game game) {
 		MOVE[] nRMoves = game.getPossibleMoves(game.getPacmanCurrentNodeIndex(), game.getPacmanLastMoveMade());
-	return nRMoves[rnd.nextInt(nRMoves.length)];
+		return nRMoves[rnd.nextInt(nRMoves.length)];
 	}
-
-//	copy.updatePacMan(moves[rnd.nextInt(moves.length)]);
-//	copy.updateGhosts(ghosts.getMove(copy, System.currentTimeMillis() + DELAY));
-//	copy.updateGame();
-//	 }
-	
-//	 private int rollout(Game game) {
-//	 Legacy ghosts = new Legacy();
-//	 while(!game.wasPacManEaten()){
-//	 MOVE[] moves = game.getPossibleMoves(game.getPacmanCurrentNodeIndex(),
-//	 game.getPacmanLastMoveMade());
-//	 game.advanceGame(moves[rnd.nextInt(moves.length)], ghosts.getMove(game,
-//	 System.currentTimeMillis() + DELAY));
-//	 }
-//	 return game.getScore();
-//	 }
-
 }

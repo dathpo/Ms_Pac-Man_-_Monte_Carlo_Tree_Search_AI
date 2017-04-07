@@ -13,7 +13,7 @@ import pacman.game.Game;
  * fill in the getAction() method. Any additional classes you write should either
  * be placed in this package or sub-packages (e.g., game.entries.pacman.mypackage).
  */
-public class MonteCarloTest extends Controller<MOVE> {
+public class FixedRoJuTest extends Controller<MOVE> {
 
 	private MOVE bestMove = MOVE.NEUTRAL;
 	private Random rnd = new Random();
@@ -54,16 +54,4 @@ public class MonteCarloTest extends Controller<MOVE> {
 		game.advanceGame(moves[rnd.nextInt(moves.length)], ghosts.getMove(game, System.currentTimeMillis() + DELAY));
 		return game.getScore();
 	}
-
-//	 private int rollout(Game game) {
-//	 Legacy ghosts = new Legacy();
-//	 while(!game.wasPacManEaten()){
-//	 MOVE[] moves = game.getPossibleMoves(game.getPacmanCurrentNodeIndex(),
-//	 game.getPacmanLastMoveMade());
-//	 game.advanceGame(moves[rnd.nextInt(moves.length)], ghosts.getMove(game,
-//	 System.currentTimeMillis() + DELAY));
-//	 }
-//	 return game.getScore();
-//	 }
-
 }

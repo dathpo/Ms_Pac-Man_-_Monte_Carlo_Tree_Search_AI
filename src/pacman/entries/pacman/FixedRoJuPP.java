@@ -4,7 +4,6 @@ import java.util.Random;
 
 import pacman.controllers.Controller;
 import pacman.controllers.examples.*;
-import static pacman.game.Constants.DELAY;
 import pacman.game.Constants.*;
 import pacman.game.Game;
 
@@ -13,7 +12,7 @@ import pacman.game.Game;
  * fill in the getAction() method. Any additional classes you write should either
  * be placed in this package or sub-packages (e.g., game.entries.pacman.mypackage).
  */
-public class MonteCarloNew extends Controller<MOVE> {
+public class FixedRoJuPP extends Controller<MOVE> {
 
 	private Legacy ghosts = new Legacy();
 	private MOVE bestMove = MOVE.NEUTRAL;
@@ -27,14 +26,8 @@ public class MonteCarloNew extends Controller<MOVE> {
 		startTime = System.currentTimeMillis();
 		MOVE[] moves = game.getPossibleMoves(game.getPacmanCurrentNodeIndex());
 		double bestAverage = 0;
-//		while (System.currentTimeMillis() <= startTime + 40) {
-		if (game.isJunction(game.getPacmanCurrentNodeIndex())) {
-//			System.out.println(timeDue - startTime);
-//			System.out.println(System.currentTimeMillis() - startTime + 40);
-			
-			
+		if (game.isJunction(game.getPacmanCurrentNodeIndex()) || game.wasPowerPillEaten()) {
 			for (MOVE move : moves) {
-				System.out.println(timeDue - System.currentTimeMillis());
 				Game gameCopy = game.copy();
 				for (int i = 0; i < numRollouts; i++) {
 					totalScore += rollout(gameCopy, move, timeDue);
@@ -50,7 +43,6 @@ public class MonteCarloNew extends Controller<MOVE> {
 		} else {
 			return getRandomNRMove(game);
 		}
-//		}
 		moveTime = (int) (System.currentTimeMillis() - startTime);
 		System.out.println("Best Average: " + bestAverage + ", Move: " + bestMove + ", Time: " + moveTime);
 		System.out.println("Current Score: " + game.getScore());
