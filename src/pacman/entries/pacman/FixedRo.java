@@ -17,7 +17,7 @@ public class FixedRo extends Controller<MOVE> {
 	private Legacy ghosts = new Legacy();
 	private MOVE bestMove = MOVE.NEUTRAL;
 	private Random rnd = new Random();
-	private int numRollouts = 100;
+	private int numRollouts = 70;
 	private double totalScore = 0;
 
 	public MOVE getMove(Game game, long timeDue) {

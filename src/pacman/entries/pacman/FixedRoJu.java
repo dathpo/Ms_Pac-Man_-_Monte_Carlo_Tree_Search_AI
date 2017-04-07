@@ -12,17 +12,18 @@ import pacman.game.Game;
  * fill in the getAction() method. Any additional classes you write should either
  * be placed in this package or sub-packages (e.g., game.entries.pacman.mypackage).
  */
-public class DavidPocockPacman extends Controller<MOVE> {
+public class FixedRoJu extends Controller<MOVE> {
 
 	private Legacy ghosts = new Legacy();
 	private MOVE bestMove = MOVE.NEUTRAL;
 	private Random rnd = new Random();
-	private int numRollouts = 70;
+	private int numRollouts = 50;
 	private double totalScore = 0;
 
 	public MOVE getMove(Game game, long timeDue) {
 		MOVE[] moves = game.getPossibleMoves(game.getPacmanCurrentNodeIndex());
 		double bestAverage = 0;
+		if (game.isJunction(game.getPacmanCurrentNodeIndex())) {
 			for (MOVE move : moves) {
 				Game gameCopy = game.copy();
 				for (int i = 0; i < numRollouts; i++) {
@@ -34,6 +35,9 @@ public class DavidPocockPacman extends Controller<MOVE> {
 				}
 				totalScore = 0;
 			}
+		} else {
+			return getRandomNRMove(game);
+		}
 		return bestMove;
 	}
 
@@ -41,13 +45,13 @@ public class DavidPocockPacman extends Controller<MOVE> {
 		Game gameCopy = game.copy();
 		gameCopy.advanceGame(move, ghosts.getMove(gameCopy, timeDue));
 		while (!gameCopy.wasPacManEaten()) {
-		gameCopy.advanceGame(getRandomNRMove(gameCopy), ghosts.getMove(gameCopy, timeDue));
+			gameCopy.advanceGame(getRandomNRMove(gameCopy), ghosts.getMove(gameCopy, timeDue));
 		}
 		return gameCopy.getScore();
 	}
-	
+
 	private MOVE getRandomNRMove(Game game) {
 		MOVE[] nRMoves = game.getPossibleMoves(game.getPacmanCurrentNodeIndex(), game.getPacmanLastMoveMade());
-	return nRMoves[rnd.nextInt(nRMoves.length)];
+		return nRMoves[rnd.nextInt(nRMoves.length)];
 	}
 }

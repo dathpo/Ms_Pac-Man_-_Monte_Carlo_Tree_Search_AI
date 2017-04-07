@@ -51,7 +51,7 @@ public class Executor {
 		// your submission
 
 		 int numTrials = 10;
-		 exec.runExperiment(new FixedRo(), new Legacy(), numTrials);
+		 exec.runExperiment(new DavidPocockPacman(), new Legacy(), numTrials);
 
 		// run a game in synchronous mode: game waits until controllers respond.
 //		 int delay = 0;
